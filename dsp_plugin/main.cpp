@@ -1,6 +1,8 @@
-#include <windows.h>
+// winsock2.h must be included BEFORE windows.h to prevent
+// windows.h from pulling in the old winsock.h (they conflict)
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <windows.h>
 #include "dsp.h"
 
 #pragma comment(lib, "ws2_32.lib")
