@@ -1,0 +1,33 @@
+# Python virtual environment
+backend/venv/
+*.pyc
+__pycache__/
+*.egg-info/
+
+# C++ build artifacts
+dsp_plugin/build/
+dsp_plugin/Release/
+dsp_plugin/Debug/
+*.obj
+*.pdb
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+# Large model files (downloaded at runtime)
+*.bin
+*.pt
+*.onnx
+*.engine
+
+# Config with secrets
+backend/config.yaml.local
+
+# Claude Code internal
+.claude/

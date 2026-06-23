@@ -1,0 +1,25 @@
+# Core: Whisper speech recognition
+faster-whisper
+
+# Audio processing
+numpy
+scipy
+
+# Voice Activity Detection (filters silence/noise before Whisper)
+silero-vad
+
+# HTTP API server
+flask
+
+# HTTP client (overlay polling, translator API calls)
+requests
+
+# Configuration
+pyyaml
+
+# Subtitle overlay (transparent window)
+PyQt6
+
+# Note: torch is a dependency of silero-vad and faster-whisper.
+# If you have an NVIDIA GPU, install the CUDA version manually:
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu121

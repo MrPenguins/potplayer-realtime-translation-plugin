@@ -1,0 +1,101 @@
+# =============================================================================
+# PotPlayer Real-time Translation Plugin — Configuration
+# =============================================================================
+# Environment variables take precedence over this file.
+# API keys should always be set via env vars (TRANSLATION_API_KEY), not here.
+# =============================================================================
+
+# --- Whisper Speech Recognition Model ---
+whisper:
+  # Model size or HuggingFace repo path:
+  #   tiny      — ~1 GB VRAM, fastest, lowest accuracy
+  #   small     — ~2 GB VRAM, good balance (DEFAULT)
+  #   medium    — ~5 GB VRAM, better accuracy
+  #   large-v3  — ~10 GB VRAM, best accuracy
+  #   Or any HuggingFace path: "guillaumeklay/faster-whisper-small-vi"
+  model_size: small
+
+  # Device: "cuda" for NVIDIA GPU, "cpu" for CPU-only
+  device: cuda
+
+  # Compute type: float16 (GPU), int8_float16 (GPU with less VRAM), int8 (CPU)
+  compute_type: float16
+
+  # Beam size for decoding (higher = more accurate but slower)
+  beam_size: 5
+
+  # Source language hint: leave null for auto-detect, or set "en", "ja", "zh", "ko", etc.
+  # Setting this correctly improves accuracy and speed.
+  language: null
+
+# --- Translation Settings ---
+translator:
+  # Backend: "api" (OpenAI-compatible cloud), "ollama" (local), "none" (no translation)
+  backend: api
+
+  # Target language for translated subtitles
+  target_lang: zh
+
+  # --- API mode (backend: api) ---
+  # OpenAI-compatible endpoint. Works with:
+  #   OpenAI, DeepSeek, Groq, OpenRouter, together.ai, SiliconFlow, etc.
+  api_base_url: https://api.openai.com/v1
+  # api_key: set via TRANSLATION_API_KEY environment variable!
+  api_model: gpt-4o-mini
+
+  # --- Ollama mode (backend: ollama) ---
+  # Make sure Ollama is running: ollama serve
+  # Recommended models: qwen2.5:1.5b (light), qwen2.5:7b (balanced), llama3.1:8b
+  ollama_base_url: http://localhost:11434
+  ollama_model: qwen2.5:1.5b
+
+# --- Voice Activity Detection (Silero VAD) ---
+vad:
+  # Speech probability threshold (0.0–1.0). Higher values = more strict.
+  # 0.5 is a good default. Increase if false positives (noise detected as speech).
+  threshold: 0.5
+
+  # Minimum speech duration in ms. Shorter sounds are treated as noise.
+  min_speech_duration_ms: 250
+
+  # Minimum silence duration in ms to mark end of a sentence.
+  # Shorter silences don't split the sentence.
+  min_silence_duration_ms: 500
+
+# --- Subtitle Display ---
+subtitle:
+  # Seconds without new subtitle before the overlay fades out and clears
+  max_idle_seconds: 3.0
+
+  # Fade-out animation duration in milliseconds
+  fade_out_ms: 500
+
+  # Font settings
+  font_size: 28
+  font_family: "Microsoft YaHei, Arial"
+
+  # Distance from bottom of screen (pixels)
+  bottom_offset: 150
+
+# --- Audio Processing ---
+audio:
+  # Minimum audio duration (seconds) to accumulate before VAD + Whisper processing
+  min_chunk_duration: 1.0
+
+  # Maximum audio duration sent to Whisper in one batch
+  max_chunk_duration: 5.0
+
+  # Overlap between consecutive processing chunks to avoid cutting words
+  overlap_duration: 0.5
+
+  # If no UDP data arrives for this many seconds, reset all audio buffers
+  # (fallback playback-state detection when DSP doesn't send explicit signals)
+  udp_timeout_seconds: 3.0
+
+# --- Server Network ---
+server:
+  # UDP port that the DSP plugin sends audio to
+  udp_port: 12345
+
+  # HTTP port for the subtitle API and config endpoint
+  http_port: 5000
