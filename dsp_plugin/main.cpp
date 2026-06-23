@@ -3,6 +3,7 @@
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
+#include <cstdint>
 #include "dsp.h"
 
 #pragma comment(lib, "ws2_32.lib")
